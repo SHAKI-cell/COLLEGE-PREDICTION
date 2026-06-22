@@ -30,7 +30,13 @@ export async function GET(req: Request) {
 
     return NextResponse.json(savedColleges.map(sc => ({
       ...sc.college,
-      facilities: typeof sc.college.facilities === 'string' ? JSON.parse(sc.college.facilities) : sc.college.facilities
+      facilities: (() => {
+        try {
+          return typeof sc.college.facilities === 'string' ? JSON.parse(sc.college.facilities) : sc.college.facilities;
+        } catch (e) {
+          return [];
+        }
+      })()
     })));
   } catch (error) {
     console.error('Saved colleges GET error:', error);

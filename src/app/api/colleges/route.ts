@@ -102,7 +102,13 @@ export async function GET(req: Request) {
     // Parse facilities from JSON string to array
     const parsedColleges = colleges.map(c => ({
       ...c,
-      facilities: typeof c.facilities === 'string' ? JSON.parse(c.facilities) : c.facilities
+      facilities: (() => {
+        try {
+          return typeof c.facilities === 'string' ? JSON.parse(c.facilities) : c.facilities;
+        } catch (e) {
+          return [];
+        }
+      })()
     }));
 
     return NextResponse.json({
@@ -154,7 +160,13 @@ export async function POST(req: Request) {
         message: 'College already exists in database',
         college: {
           ...existingCollege,
-          facilities: typeof existingCollege.facilities === 'string' ? JSON.parse(existingCollege.facilities) : existingCollege.facilities
+          facilities: (() => {
+            try {
+              return typeof existingCollege.facilities === 'string' ? JSON.parse(existingCollege.facilities) : existingCollege.facilities;
+            } catch (e) {
+              return [];
+            }
+          })()
         }
       });
     }

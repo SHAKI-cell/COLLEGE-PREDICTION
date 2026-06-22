@@ -54,7 +54,13 @@ export async function GET(
 
     return NextResponse.json({
       ...college,
-      facilities: typeof college.facilities === 'string' ? JSON.parse(college.facilities) : college.facilities,
+      facilities: (() => {
+        try {
+          return typeof college.facilities === 'string' ? JSON.parse(college.facilities) : college.facilities;
+        } catch (e) {
+          return [];
+        }
+      })(),
       isSaved
     });
   } catch (error) {

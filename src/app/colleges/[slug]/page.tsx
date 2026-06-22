@@ -92,7 +92,13 @@ export default async function CollegeDetailPage({ params }: Props) {
     placementAverage: college.placementAverage,
     placementHighest: college.placementHighest,
     type: college.type,
-    facilities: typeof college.facilities === 'string' ? JSON.parse(college.facilities) : college.facilities,
+    facilities: (() => {
+      try {
+        return typeof college.facilities === 'string' ? JSON.parse(college.facilities) : college.facilities;
+      } catch (e) {
+        return [];
+      }
+    })(),
     admissionInfo: college.admissionInfo,
     courses: college.courses,
     reviews: formattedReviews,

@@ -28,9 +28,16 @@ async function getFeaturedColleges() {
         }
       }
     });
+    
     const parseFacilities = (colleges: any[]) => colleges.map(c => ({
       ...c,
-      facilities: typeof c.facilities === 'string' ? JSON.parse(c.facilities) : c.facilities
+      facilities: (() => {
+        try {
+          return typeof c.facilities === 'string' ? JSON.parse(c.facilities) : c.facilities;
+        } catch (e) {
+          return [];
+        }
+      })()
     }));
 
     return { topRated: parseFacilities(topRated), topPlacement: parseFacilities(topPlacement) };
