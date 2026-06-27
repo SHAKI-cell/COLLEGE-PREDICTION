@@ -124,7 +124,7 @@ export default function Footer() {
             &copy; {currentYear} UniDiscover Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-1.5">
-            Built with <Heart className="h-3 w-3 text-indigo-500 fill-indigo-500" /> by Antigravity
+            Built with <Heart className="h-3 w-3 text-indigo-500 fill-indigo-500" /> for Students
           </div>
         </div>
       </div>
